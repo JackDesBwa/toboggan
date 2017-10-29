@@ -7,7 +7,6 @@ Window {
     width: 800
     height: 600
     title: qsTr("Présentation Moiré")
-    visibility: Window.FullScreen
     color: "#000"
 
     function fullscreen(type) {
