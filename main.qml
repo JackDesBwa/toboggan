@@ -60,6 +60,7 @@ Window {
         color: "#000"
         scale: (win.width/width < win.height/height) ? win.width/width : win.height/height
         focus: true
+        clip: true
 
         Keys.onPressed: {
             if (event.key == Qt.Key_Return || event.key == Qt.Key_Space || event.key == Qt.Key_Right) {
