@@ -18,12 +18,42 @@ Window {
             win.visibility = Window.Windowed;
     }
 
+    property int slide: -1
+    property variant currentSlide
+
+    function gotoSlide(nr) {
+        if (nr < 0) {
+            if (currentSlide)
+                currentSlide.close();
+            currentSlide = undefined;
+            slide = -1;
+            return;
+        }
+        var url = Qt.resolvedUrl("./slide_" + nr + ".qml");
+        var component = Qt.createComponent(url);
+        if (component.status == Component.Ready) {
+            var obj = component.createObject(frame);
+            if (obj) {
+                if (currentSlide)
+                    currentSlide.close();
+                currentSlide = obj;
+                slide = nr;
+                obj.open();
+            } else {
+                console.warn("Error while creating object", url)
+            }
+        } else {
+            console.warn("Component creation failed :", component.status, url, component.errorString())
+        }
+    }
+
     MouseArea {
         anchors.fill: parent
         onDoubleClicked: win.fullscreen(2)
     }
 
     Rectangle {
+        id: frame
         anchors.centerIn: parent
         width: 1280
         height: 800
@@ -33,9 +63,13 @@ Window {
 
         Keys.onPressed: {
             if (event.key == Qt.Key_Return || event.key == Qt.Key_Space || event.key == Qt.Key_Right) {
+                if (!currentSlide || !currentSlide.next())
+                    gotoSlide(slide + 1);
                 event.accepted = true;
 
             } else if (event.key == Qt.Key_Backspace || event.key == Qt.Key_Left) {
+                if (!currentSlide || !currentSlide.previous())
+                    gotoSlide(slide - 1);
                 event.accepted = true;
 
             } else if (event.key == Qt.Key_F) {
