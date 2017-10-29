@@ -32,7 +32,7 @@ Window {
         focus: true
 
         Keys.onPressed: {
-            if (event.key == Qt.Key_Return || event.key == Qt.Key_Right) {
+            if (event.key == Qt.Key_Return || event.key == Qt.Key_Space || event.key == Qt.Key_Right) {
                 event.accepted = true;
 
             } else if (event.key == Qt.Key_Backspace || event.key == Qt.Key_Left) {
