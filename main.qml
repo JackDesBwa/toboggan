@@ -43,7 +43,10 @@ Window {
                 event.accepted = true;
 
             } else if (event.key == Qt.Key_Escape) {
-                win.fullscreen(0);
+                if (visibility == Window.Windowed)
+                    Qt.quit();
+                else
+                    win.fullscreen(0);
                 event.accepted = true;
             }
         }
