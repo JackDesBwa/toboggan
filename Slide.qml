@@ -8,8 +8,17 @@ Item {
     property int step: 0 ///< Current step
     property int steps: 1 ///< Number of steps
 
-    property Animation openAnimation;
-    property Animation closeAnimation;
+    property Animation openAnimation: NumberAnimation {
+        target: slide
+        property: "x"
+        from: width
+        to: 0
+    }
+    property Animation closeAnimation: NumberAnimation {
+        target: slide
+        property: "x"
+        to: -width
+    }
 
     // Function called at opening
     function open() {
