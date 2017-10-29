@@ -29,7 +29,7 @@ Window {
             slide = -1;
             return;
         }
-        var url = Qt.resolvedUrl("./slides/slide_" + ("00"+nr).slice(-2) + ".qml");
+        var url = Qt.resolvedUrl("./slide_" + ("00"+nr).slice(-2) + ".qml");
         var component = Qt.createComponent(url);
         if (component.status == Component.Ready) {
             var obj = component.createObject(frame);
