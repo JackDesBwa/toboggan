@@ -72,6 +72,14 @@ Window {
                     gotoSlide(slide - 1);
                 event.accepted = true;
 
+            } else if (event.key == Qt.Key_PageUp) {
+                gotoSlide(slide + 1);
+                event.accepted = true;
+
+            } else if (event.key == Qt.Key_PageDown) {
+                gotoSlide(slide - 1);
+                event.accepted = true;
+
             } else if (event.key == Qt.Key_F) {
                 win.fullscreen(2);
                 event.accepted = true;
