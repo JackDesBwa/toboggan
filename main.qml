@@ -6,7 +6,7 @@ Window {
     visible: true
     width: 800
     height: 600
-    title: qsTr("Présentation Moiré")
+    title: qsTr("Presentation")
     color: "#000"
 
     function fullscreen(type) {
