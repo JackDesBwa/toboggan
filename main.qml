@@ -20,7 +20,17 @@ Window {
 
     MouseArea {
         anchors.fill: parent
-        onDoubleClicked: win.fullscreen(2)
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onDoubleClicked: {
+            if (slideView.slide == -1)
+                win.fullscreen(2)
+        }
+        onClicked: {
+            if (mouse.button == Qt.RightButton)
+                slideView.previous();
+            else
+                slideView.next();
+        }
     }
 
     Rectangle {
