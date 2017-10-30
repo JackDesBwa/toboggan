@@ -50,19 +50,19 @@ Window {
         }
 
         Keys.onPressed: {
-            if (event.key == Qt.Key_Return || event.key == Qt.Key_Space || event.key == Qt.Key_Right) {
+            if([Qt.Key_Return, Qt.Key_Space, Qt.Key_Right, Qt.Key_D, Qt.Key_L].indexOf(event.key) !== -1) {
                 slideView.next();
                 event.accepted = true;
 
-            } else if (event.key == Qt.Key_Backspace || event.key == Qt.Key_Left) {
+            } else if([Qt.Key_Backspace, Qt.Key_Left, Qt.Key_Q, Qt.Key_A, Qt.Key_H].indexOf(event.key) !== -1) {
                 slideView.previous();
                 event.accepted = true;
 
-            } else if (event.key == Qt.Key_PageUp) {
+            } else if([Qt.Key_PageUp, Qt.Key_Up, Qt.Key_Z, Qt.Key_W, Qt.Key_K].indexOf(event.key) !== -1) {
                 slideView.next(true);
                 event.accepted = true;
 
-            } else if (event.key == Qt.Key_PageDown) {
+            } else if([Qt.Key_PageDown, Qt.Key_Down, Qt.Key_S, Qt.Key_J].indexOf(event.key) !== -1) {
                 slideView.previous(true);
                 event.accepted = true;
 
