@@ -7,6 +7,6 @@ Slide {
         anchors.centerIn: parent
         color: "#fff"
         font.pixelSize: 60
-        text: "0 - " + slide.step
+        text: "2 - 0 - " + slide.step
     }
 }

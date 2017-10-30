@@ -18,35 +18,6 @@ Window {
             win.visibility = Window.Windowed;
     }
 
-    property int slide: -1
-    property variant currentSlide
-
-    function gotoSlide(nr) {
-        if (nr < 0) {
-            if (currentSlide)
-                currentSlide.close();
-            currentSlide = undefined;
-            slide = -1;
-            return;
-        }
-        var url = Qt.resolvedUrl("./slide_" + ("00"+nr).slice(-2) + ".qml");
-        var component = Qt.createComponent(url);
-        if (component.status == Component.Ready) {
-            var obj = component.createObject(frame);
-            if (obj) {
-                if (currentSlide)
-                    currentSlide.close();
-                currentSlide = obj;
-                slide = nr;
-                obj.open();
-            } else {
-                console.warn("Error while creating object", url)
-            }
-        } else {
-            console.warn("Component creation failed :", component.status, url, component.errorString())
-        }
-    }
-
     MouseArea {
         anchors.fill: parent
         onDoubleClicked: win.fullscreen(2)
@@ -60,25 +31,29 @@ Window {
         color: "#000"
         scale: (win.width/width < win.height/height) ? win.width/width : win.height/height
         focus: true
-        clip: true
+
+        Slide {
+            id: slideView
+            anchors.fill: parent
+            clip: true
+            prefix: "slide_"
+        }
 
         Keys.onPressed: {
             if (event.key == Qt.Key_Return || event.key == Qt.Key_Space || event.key == Qt.Key_Right) {
-                if (!currentSlide || !currentSlide.next())
-                    gotoSlide(slide + 1);
+                slideView.next();
                 event.accepted = true;
 
             } else if (event.key == Qt.Key_Backspace || event.key == Qt.Key_Left) {
-                if (!currentSlide || !currentSlide.previous())
-                    gotoSlide(slide - 1);
+                slideView.previous();
                 event.accepted = true;
 
             } else if (event.key == Qt.Key_PageUp) {
-                gotoSlide(slide + 1);
+                slideView.next(true);
                 event.accepted = true;
 
             } else if (event.key == Qt.Key_PageDown) {
-                gotoSlide(slide - 1);
+                slideView.previous(true);
                 event.accepted = true;
 
             } else if (event.key == Qt.Key_F) {
