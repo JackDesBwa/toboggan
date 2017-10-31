@@ -6,7 +6,7 @@ Window {
     visible: true
     width: 800
     height: 600
-    title: qsTr("Presentation")
+    title: qsTr("Toboggan")
     color: "#000"
 
     function fullscreen(type) {
