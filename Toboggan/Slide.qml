@@ -57,7 +57,7 @@ Item {
             step = nr;
             return true;
         }
-        var url = Qt.resolvedUrl(prefix + ("00"+nr).slice(-2) + ".qml");
+        var url = prefix + ("00"+nr).slice(-2) + ".qml";
         var component = Qt.createComponent(url);
         if (component.status == Component.Ready) {
             var obj = component.createObject(slide);

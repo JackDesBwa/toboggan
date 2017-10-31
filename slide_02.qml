@@ -1,8 +1,9 @@
 import QtQuick 2.0
+import "Toboggan"
 
 Slide {
     id: slide
-    prefix: "slide_02_"
+    prefix: Qt.resolvedUrl("slide_02_")
     openAnimation: null
     closeAnimation: null
 }
