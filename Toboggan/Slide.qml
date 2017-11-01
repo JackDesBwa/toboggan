@@ -102,7 +102,7 @@ Item {
         var url = prefix + ("00"+nr).slice(-2) + ".qml";
         var component = Qt.createComponent(url);
         if (component.status == Component.Ready) {
-            var obj = component.createObject(slide);
+            var obj = component.createObject(slide, {width: slide.width, height: slide.height});
             if (obj) {
                 if (currentSlide)
                     currentSlide.slide.close();
