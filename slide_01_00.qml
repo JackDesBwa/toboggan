@@ -3,11 +3,10 @@ import "Toboggan"
 
 Slide {
     id: slide
-    steps: 5
     Text {
         anchors.centerIn: parent
         color: "#fff"
-        font.pixelSize: 60
-        text: "2 - 0 - " + slide.step
+        font.pixelSize: 160
+        text: "Key bindings"
     }
 }

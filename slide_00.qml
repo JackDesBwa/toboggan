@@ -3,11 +3,42 @@ import "Toboggan"
 
 Slide {
     id: slide
-    steps: 5
-    Text {
+    openAnimation:
+        NumberAnimation {
+        target: slide
+        property: "opacity"
+        from: 0
+        to: 1
+    }
+    closeAnimation:
+        NumberAnimation {
+        target: slide
+        property: "opacity"
+        to: 0
+    }
+    Column {
+        spacing: 40
         anchors.centerIn: parent
-        color: "#fff"
-        font.pixelSize: 60
-        text: "0 - " + slide.step
+        Text {
+            color: "#6cf"
+            font.pixelSize: 180
+            text: "Toboggan"
+        }
+        Text {
+            id: txtSpace
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "#ccc"
+            font.pixelSize: 60
+            text: "Press space to continue"
+            NumberAnimation {
+                target: txtSpace
+                running: true
+                property: "opacity"
+                easing.type: Easing.InOutCubic
+                duration: 2500
+                from: 0
+                to: 1
+            }
+        }
     }
 }
