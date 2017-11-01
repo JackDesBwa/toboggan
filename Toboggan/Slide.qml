@@ -89,6 +89,7 @@ Item {
             if (currentSlide)
                 currentSlide.slide.close();
             currentSlide = undefined;
+            slide.forceActiveFocus();
             step = 0;
             return false;
         }
@@ -107,6 +108,7 @@ Item {
                     currentSlide.slide.close();
                 currentSlide = obj;
                 currentSlide.slide.container = currentSlide;
+                currentSlide.forceActiveFocus();
                 step = nr;
                 obj.slide.open();
                 return true;
