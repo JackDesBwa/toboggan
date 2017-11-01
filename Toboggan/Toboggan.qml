@@ -89,7 +89,7 @@ Window {
                 slideView.previous(true);
                 event.accepted = true;
 
-            } else if (event.key == Qt.Key_F) {
+            } else if ([Qt.Key_F, Qt.Key_F11].indexOf(event.key) !== -1) {
                 win.fullscreen(2);
                 event.accepted = true;
 
