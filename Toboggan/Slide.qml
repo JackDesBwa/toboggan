@@ -24,6 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 Item {
     id: slide
 
+    property alias slide: slide ///< Alias to current slide (allows to substitude slide by complex background)
+    property variant container: null ///< Reference to actual background (set by parent slide)
     property int step: 0 ///< Current step
     property int steps: 1 ///< Number of steps
     property variant currentSlide ///< Current subslide object
@@ -43,6 +45,8 @@ Item {
 
     // Function called at opening
     function open() {
+        if (container.openAnimation)
+            container.openAnimation.start();
         if (openAnimation)
             openAnimation.start();
     }
@@ -50,15 +54,31 @@ Item {
     // Function called at closing
     // @note May be called when step is not the last one
     function close() {
+        var closing = 0;
+        if (container && container.closeAnimation) closing += 1;
+        if (closeAnimation) closing += 1;
+        if (container && container.closeAnimation) {
+            container.closeAnimation.runningChanged.connect(function() {
+                if (!container.closeAnimation.running) {
+                    closing--;
+                    if (closing == 0)
+                        container.destroy();
+                }
+            });
+            container.closeAnimation.start();
+        }
         if (closeAnimation) {
             closeAnimation.runningChanged.connect(function() {
-                if (!closeAnimation.running)
-                    destroy();
+                if (!closeAnimation.running) {
+                    closing--;
+                    if (closing == 0 && container)
+                        container.destroy();
+                }
             });
             closeAnimation.start();
-        } else {
-            destroy();
         }
+        if (closing == 0 && container)
+            container.destroy();
     }
 
     // Go directly to one step
@@ -67,7 +87,7 @@ Item {
     function go(nr) {
         if (nr < 0) {
             if (currentSlide)
-                currentSlide.close();
+                currentSlide.slide.close();
             currentSlide = undefined;
             step = 0;
             return false;
@@ -84,10 +104,11 @@ Item {
             var obj = component.createObject(slide);
             if (obj) {
                 if (currentSlide)
-                    currentSlide.close();
+                    currentSlide.slide.close();
                 currentSlide = obj;
+                currentSlide.slide.container = currentSlide;
                 step = nr;
-                obj.open();
+                obj.slide.open();
                 return true;
             } else {
                 console.warn("Error while creating object", url)
@@ -109,13 +130,13 @@ Item {
                     return false;
                 step++;
                 return true;
-            } else if (!currentSlide.next(quick)) {
+            } else if (!currentSlide.slide.next(quick)) {
                 return next(true);
             } else {
                 return true;
             }
         } else {
-            if (currentSlide && !currentSlide.next(quick)) {
+            if (currentSlide && !currentSlide.slide.next(quick)) {
                 return go(step + 1);
             } else if (prefix && !currentSlide) {
                 return go(0);
@@ -130,7 +151,7 @@ Item {
         if (!quick) {
             if (!currentSlide)
                 return previous(true);
-            else if (currentSlide && !currentSlide.previous(quick))
+            else if (currentSlide && !currentSlide.slide.previous(quick))
                 return previous(true);
             else
                 return true;
